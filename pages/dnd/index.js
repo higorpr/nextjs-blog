@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import ReactFlow, {
 	useNodesState,
 	useEdgesState,
@@ -6,6 +6,7 @@ import ReactFlow, {
 	Controls,
 	Background,
 	Panel,
+	MarkerType,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import ArrowBox from "./ShapedNodes/ArrowBoxNode/ArrowBox";
@@ -28,14 +29,16 @@ const initialNodes = [
 	{
 		id: "1",
 		type: "rectangle",
-		position: { x: -50, y: 0 },
+		position: { x: 10, y: 10 },
 		data: { label: "Node 1" },
+		parentNode: "9",
 	},
 	{
 		id: "2",
 		type: "rectangle",
-		position: { x: 0, y: 100 },
+		position: { x: 10, y: 70 },
 		data: { label: "Node 2" },
+		parentNode: "9",
 	},
 	{
 		id: "3",
@@ -60,7 +63,7 @@ const initialNodes = [
 	{
 		id: "6",
 		type: "document",
-		position: { x: -100, y: 100 },
+		position: { x: -100, y: 150 },
 		data: { label: "Node 6" },
 	},
 	{
@@ -72,13 +75,40 @@ const initialNodes = [
 	{
 		id: "8",
 		type: "parallelogram",
-		position: { x: -100, y: 200 },
+		position: { x: 50, y: 200 },
 		data: { label: "Node 8" },
+	},
+	{
+		id: "9",
+		type: "group",
+		data: { label: "Group A" },
+		position: { x: -100, y: -10 },
+		className: "light",
+		style: {
+			backgroundColor: "rgba(255,0,0,0.2)",
+			width: 120,
+			height: 120,
+		},
 	},
 ];
 const initialEdges = [
-	{ id: "1-2", source: "1", target: "2", label: "test label", type: "step" },
-	{ id: "2-3", source: "2", target: "3", label: "test label", type: "step" },
+	{
+		id: "1-2",
+		source: "1",
+		target: "2",
+		label: "test label",
+		type: "step",
+		markerEnd: { type: MarkerType.ArrowClosed, color: "#000" },
+		style: { color: "#000" },
+	},
+	{
+		id: "2-3",
+		source: "2",
+		target: "3",
+		label: "test label",
+		type: "step",
+		markerEnd: { type: MarkerType.Arrow },
+	},
 ];
 
 const rfStyle = { backgroundColor: "#ffffff" };
@@ -102,6 +132,7 @@ export default function Dnd() {
 				fitView
 				nodeTypes={nodeTypes}
 				style={rfStyle}
+				connectionLineType="step"
 			>
 				<Controls />
 				<Background color="#ccc" variant={background} />
