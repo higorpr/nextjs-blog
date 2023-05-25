@@ -6,7 +6,7 @@ export default function Triangle({ data, isConnectable }) {
 		<TriangleDiv>
 			<div>
 				<label htmlFor="text">
-					<p>TestLabel</p>
+					<p>{data.label}</p>
 				</label>
 			</div>
 			<Handle
@@ -30,20 +30,25 @@ export default function Triangle({ data, isConnectable }) {
 const TriangleDiv = styled.div`
 	width: 0;
 	height: 0;
-	border-top: 30px solid transparent;
-	border-bottom: 30px solid transparent;
-	border-left: 52px solid black;
-	/* transform: rotate(45deg); */
+	border-top: 40px solid transparent;
+	border-bottom: 40px solid transparent;
+	border-left: 72px solid black;
 
 	label {
 		/* background-color: red; */
+		width: 60px;
+		height: 80px;
 		display: flex;
+		text-align: center;
 		align-items: center;
+		justify-content: center;
 		color: #000;
 		font-size: 8px;
 		position: absolute;
-		top: 42%;
-		left: 10%;
+		padding: 5px;
+		top: 0px;
+		left: 0px;
+		/* background-color: red; */
 
 		p {
 			color: white;

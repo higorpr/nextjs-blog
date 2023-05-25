@@ -12,7 +12,9 @@ export default function Document({ data, isConnectable }) {
 				</Triangle>
 			</UpperPart>
 			<div>
-				<label htmlFor="text">'Test Label'</label>
+				<label htmlFor="text">
+					<p>{data.label}</p>
+				</label>
 			</div>
 			<LowerPart></LowerPart>
 			<Handle
@@ -29,26 +31,32 @@ export default function Document({ data, isConnectable }) {
 const DocumentDiv = styled.div`
 	background: white;
 	width: 50px;
+	height: 60px;
 	display: flex;
 	flex-direction: column;
+	position: relative;
 
 	label {
 		display: flex;
+		width: 50px;
+		height: 100%;
 		flex-wrap: wrap;
 		word-break: break-all;
 		text-align: center;
+		justify-content: center;
+		align-items: center;
 		color: #000;
 		font-size: 8px;
-		width: 50px;
-		padding: 2px;
+		padding: 5px;
 		position: absolute;
-		top: 40%;
-		left: 5%;
+		top: 0;
+		left: 0;
 	}
 `;
 
 const UpperPart = styled.div`
 	width: 100%;
+	height: 10px;
 	/* background-color: grey; */
 	display: flex;
 `;
@@ -61,7 +69,7 @@ const SemiRectangle = styled.div`
 
 const Triangle = styled.div`
 	display: flex;
-	height: 10px;
+	height: 100%;
 	width: 10px;
 	position: relative;
 `;
@@ -76,7 +84,7 @@ const Cathets = styled.div`
 const Hypothenuse = styled.div`
 	transform: skew(45deg);
 	width: 10px;
-	height: 9px;
+	height: 100%;
 	border-left: 1.8px solid black;
 	position: absolute;
 	left: 4.2px;

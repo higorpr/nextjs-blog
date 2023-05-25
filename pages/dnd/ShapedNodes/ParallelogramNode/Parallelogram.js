@@ -1,14 +1,9 @@
-import { useCallback } from "react";
 import { Handle, Position } from "reactflow";
 import styled from "styled-components";
 
-export default function Ellipsis({ data, isConnectable }) {
-	// const onChange = useCallback((evt) => {
-	// 	console.log(evt.target.value);
-	// }, []);
-
+export default function Parallelogram({ data, isConnectable }) {
 	return (
-		<CircularDiv>
+		<ParallelogramDiv>
 			<div>
 				<label htmlFor="text">
 					<p>{data.label}</p>
@@ -19,33 +14,38 @@ export default function Ellipsis({ data, isConnectable }) {
 				position={Position.Left}
 				id="a"
 				isConnectable={isConnectable}
+				style={{ color: "red", transform: "skew(-30deg)" }}
 			/>
 			<Handle
 				type="source"
 				position={Position.Right}
 				id="b"
 				isConnectable={isConnectable}
+				style={{ transform: "skew(-30deg)" }}
 			/>
-		</CircularDiv>
+		</ParallelogramDiv>
 	);
 }
 
-const CircularDiv = styled.div`
+const ParallelogramDiv = styled.div`
 	height: 50px;
-	width: 80px;
-	border-radius: 50%;
-	border: 1px solid #000;
+	width: 100px;
+	border-radius: 5px;
+	border: 1.5px solid #eee;
 	padding: 5px;
-	background-color: #000;
+	background: black;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	border-color: #000;
+	transform: skew(30deg);
 
 	label {
 		display: flex;
 		text-align: center;
 		color: #000;
 		font-size: 8px;
+		transform: skew(-30deg);
 
 		p {
 			color: #fff;

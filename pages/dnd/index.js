@@ -10,28 +10,36 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import ArrowBox from "./ShapedNodes/ArrowBoxNode/ArrowBox";
 import Document from "./ShapedNodes/DocumentNode/Document";
-import Circle from "./ShapedNodes/EllipsisNode/Ellipsis";
+import Ellipsis from "./ShapedNodes/EllipsisNode/Ellipsis";
 import Rectangle from "./ShapedNodes/RectangleNode/Rectangle";
 import Triangle from "./ShapedNodes/TriangleNode/Triangle";
+import Parallelogram from "./ShapedNodes/ParallelogramNode/Parallelogram";
 
 const nodeTypes = {
-	circle: Circle,
+	ellipsis: Ellipsis,
 	rectangle: Rectangle,
 	arrow: ArrowBox,
 	document: Document,
 	triangle: Triangle,
+	parallelogram: Parallelogram,
 };
 
 const initialNodes = [
-	{ id: "1", position: { x: -50, y: 0 }, data: { label: "Node 1" } },
+	{
+		id: "1",
+		type: "rectangle",
+		position: { x: -50, y: 0 },
+		data: { label: "Node 1" },
+	},
 	{
 		id: "2",
+		type: "rectangle",
 		position: { x: 0, y: 100 },
 		data: { label: "Node 2" },
 	},
 	{
 		id: "3",
-		type: "circle",
+		type: "ellipsis",
 		position: { x: 180, y: 0 },
 		data: { label: "Node 3" },
 	},
@@ -45,19 +53,27 @@ const initialNodes = [
 		id: "5",
 		type: "arrow",
 		position: { x: 280, y: 100 },
-		data: { label: "Node 5" },
+		data: {
+			label: "Node 5",
+		},
 	},
 	{
 		id: "6",
 		type: "document",
-		position: { x: 400, y: 100 },
+		position: { x: -100, y: 100 },
 		data: { label: "Node 6" },
 	},
 	{
 		id: "7",
 		type: "triangle",
 		position: { x: 400, y: -100 },
-		data: { label: "Node 7" },
+		data: { label: "Node 7 (Chat GPT)" },
+	},
+	{
+		id: "8",
+		type: "parallelogram",
+		position: { x: -100, y: 200 },
+		data: { label: "Node 8" },
 	},
 ];
 const initialEdges = [

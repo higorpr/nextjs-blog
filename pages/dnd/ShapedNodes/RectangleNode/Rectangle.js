@@ -5,7 +5,9 @@ export default function Rectangle({ data, isConnectable }) {
 	return (
 		<RectangularDiv>
 			<div>
-				<label htmlFor="text">{data.innerText}</label>
+				<label htmlFor="text">
+					<p>{data.label}</p>
+				</label>
 			</div>
 			<Handle
 				type="target"
@@ -30,7 +32,7 @@ const RectangularDiv = styled.div`
 	border-radius: 5px;
 	border: 1px solid #eee;
 	padding: 5px;
-	background: white;
+	background-color: #000;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -41,5 +43,9 @@ const RectangularDiv = styled.div`
 		text-align: center;
 		color: #000;
 		font-size: 8px;
+
+		p {
+			color: #fff;
+		}
 	}
 `;
