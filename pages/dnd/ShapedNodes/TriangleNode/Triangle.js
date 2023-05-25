@@ -14,14 +14,14 @@ export default function Triangle({ data, isConnectable }) {
 				position={Position.Left}
 				id="a"
 				isConnectable={isConnectable}
-				style={{ backgroundColor: "blue" }}
+				// style={{ backgroundColor: "blue" }}
 			/>
 			<Handle
 				type="source"
 				position={Position.Right}
 				id="b"
 				isConnectable={isConnectable}
-				style={{ backgroundColor: "blue" }}
+				// style={{ backgroundColor: "blue" }}
 			/>
 		</TriangleDiv>
 	);
