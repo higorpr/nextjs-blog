@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import ReactFlow, {
 	useNodesState,
 	useEdgesState,
@@ -7,6 +7,7 @@ import ReactFlow, {
 	Background,
 	Panel,
 	MarkerType,
+	ReactFlowProvider,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import ArrowBox from "../../components/ShapedNodes/ArrowBoxNode/ArrowBox";
@@ -26,6 +27,11 @@ const nodeTypes = {
 	triangle: Triangle,
 	parallelogram: Parallelogram,
 };
+
+let id = 0;
+function getId() {
+	return `dndnode_${id++}`;
+}
 
 const initialNodes = [
 	{
@@ -118,43 +124,87 @@ const rfStyle = { backgroundColor: "#ffffff" };
 export default function Dnd() {
 	const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
 	const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+	const [background, setBackground] = useState("lines");
+	const reactFlowWrapper = useRef(null);
+	const [reactFlowInstance, setReactFlowInstance] = useState(null);
+
 	const onConnect = useCallback(
 		(connection) => setEdges((eds) => addEdge(connection, eds)),
 		[setEdges]
 	);
-	const [background, setBackground] = useState("lines");
+
+	const onDragOver = useCallback((event) => {
+		event.preventDefault();
+		event.dataTransfer.dropEffect = "move";
+	}, []);
+
+	const onDrop = useCallback(
+		(event) => {
+			event.preventDefault();
+			const reactFlowBounds =
+				reactFlowWrapper.current.getBoundingClientRect();
+			const type = event.dataTransfer.getData("application/reactflow");
+
+			// is a valid react flow element?
+			if (typeof type === "undefined" || !type) {
+				return;
+			}
+
+			const position = reactFlowInstance.project({
+				x: event.clientX - reactFlowBounds.left,
+				y: event.clientY - reactFlowBounds.top,
+			});
+			console.log(position);
+
+			const newNode = {
+				id: getId(),
+				type,
+				position,
+				data: { label: "" },
+			};
+
+			setNodes((nds) => nds.concat(newNode));
+		},
+		[reactFlowInstance]
+	);
 	return (
 		<>
-			<ArrowBoxSvg width="130" height="50" color='#fcba03'/>
-			{/* <ShapesBar /> */}
-			<div style={{ width: "100vw", height: "90vh" }}>
-				<ReactFlow
-					nodes={nodes}
-					edges={edges}
-					onNodesChange={onNodesChange}
-					onEdgesChange={onEdgesChange}
-					onConnect={onConnect}
-					fitView
-					nodeTypes={nodeTypes}
-					style={rfStyle}
-					connectionLineType="step"
+			{/* <ArrowBoxSvg width="130" height="50" color="#000" /> */}
+			<ReactFlowProvider>
+				<ShapesBar />
+				<div
+					style={{ width: "100vw", height: "90vh" }}
+					className="reactflow-wrapper"
+					ref={reactFlowWrapper}
 				>
-					<Controls />
-					<Background color="#ccc" variant={background} />
-					<Panel position="bottom-right">
-						<div style={{ color: "#000" }}>Grid Style</div>
-						<button onClick={() => setBackground("dots")}>
-							dots
-						</button>
-						<button onClick={() => setBackground("lines")}>
-							lines
-						</button>
-						<button onClick={() => setBackground("cross")}>
-							cross
-						</button>
-					</Panel>
-				</ReactFlow>
-			</div>
+					<ReactFlow
+						nodes={nodes}
+						edges={edges}
+						onNodesChange={onNodesChange}
+						onEdgesChange={onEdgesChange}
+						onConnect={onConnect}
+						fitView
+						nodeTypes={nodeTypes}
+						style={rfStyle}
+						connectionLineType="step"
+					>
+						<Controls />
+						<Background color="#ccc" variant={background} />
+						<Panel position="bottom-right">
+							<div style={{ color: "#000" }}>Grid Style</div>
+							<button onClick={() => setBackground("dots")}>
+								dots
+							</button>
+							<button onClick={() => setBackground("lines")}>
+								lines
+							</button>
+							<button onClick={() => setBackground("cross")}>
+								cross
+							</button>
+						</Panel>
+					</ReactFlow>
+				</div>
+			</ReactFlowProvider>
 		</>
 	);
 }
