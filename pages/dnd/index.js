@@ -9,12 +9,14 @@ import ReactFlow, {
 	MarkerType,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import ArrowBox from "./ShapedNodes/ArrowBoxNode/ArrowBox";
-import Document from "./ShapedNodes/DocumentNode/Document";
-import Ellipsis from "./ShapedNodes/EllipsisNode/Ellipsis";
-import Rectangle from "./ShapedNodes/RectangleNode/Rectangle";
-import Triangle from "./ShapedNodes/TriangleNode/Triangle";
-import Parallelogram from "./ShapedNodes/ParallelogramNode/Parallelogram";
+import ArrowBox from "../../components/ShapedNodes/ArrowBoxNode/ArrowBox";
+import Document from "../../components/ShapedNodes/DocumentNode/Document";
+import Ellipsis from "../../components/ShapedNodes/EllipsisNode/Ellipsis";
+import Rectangle from "../../components/ShapedNodes/RectangleNode/Rectangle";
+import Triangle from "../../components/ShapedNodes/TriangleNode/Triangle";
+import Parallelogram from "../../components/ShapedNodes/ParallelogramNode/Parallelogram";
+import ShapesBar from "../../components/ShapesBar/ShapesBar";
+import ArrowBoxSvg from "../../assets/svg/ArrowBoxSvg";
 
 const nodeTypes = {
 	ellipsis: Ellipsis,
@@ -87,7 +89,7 @@ const initialNodes = [
 		style: {
 			backgroundColor: "rgba(255,0,0,0.2)",
 			width: 120,
-			height: 120,
+			height: 130,
 		},
 	},
 ];
@@ -122,31 +124,37 @@ export default function Dnd() {
 	);
 	const [background, setBackground] = useState("lines");
 	return (
-		<div style={{ width: "100vw", height: "100vh" }}>
-			<ReactFlow
-				nodes={nodes}
-				edges={edges}
-				onNodesChange={onNodesChange}
-				onEdgesChange={onEdgesChange}
-				onConnect={onConnect}
-				fitView
-				nodeTypes={nodeTypes}
-				style={rfStyle}
-				connectionLineType="step"
-			>
-				<Controls />
-				<Background color="#ccc" variant={background} />
-				<Panel position="bottom-right">
-					<div style={{ color: "#000" }}>Grid Style</div>
-					<button onClick={() => setBackground("dots")}>dots</button>
-					<button onClick={() => setBackground("lines")}>
-						lines
-					</button>
-					<button onClick={() => setBackground("cross")}>
-						cross
-					</button>
-				</Panel>
-			</ReactFlow>
-		</div>
+		<>
+			<ArrowBoxSvg width="130" height="50" color='#fcba03'/>
+			{/* <ShapesBar /> */}
+			<div style={{ width: "100vw", height: "90vh" }}>
+				<ReactFlow
+					nodes={nodes}
+					edges={edges}
+					onNodesChange={onNodesChange}
+					onEdgesChange={onEdgesChange}
+					onConnect={onConnect}
+					fitView
+					nodeTypes={nodeTypes}
+					style={rfStyle}
+					connectionLineType="step"
+				>
+					<Controls />
+					<Background color="#ccc" variant={background} />
+					<Panel position="bottom-right">
+						<div style={{ color: "#000" }}>Grid Style</div>
+						<button onClick={() => setBackground("dots")}>
+							dots
+						</button>
+						<button onClick={() => setBackground("lines")}>
+							lines
+						</button>
+						<button onClick={() => setBackground("cross")}>
+							cross
+						</button>
+					</Panel>
+				</ReactFlow>
+			</div>
+		</>
 	);
 }
